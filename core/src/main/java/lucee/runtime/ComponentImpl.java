@@ -1042,7 +1042,9 @@ public final class ComponentImpl extends StructSupport implements Externalizable
 		Collection.Key key;
 		for (int i = 0; i < keys.length; i++) {
 			key = keys[i];
-			List<DumpRow> box = drAccess[ci.getAccess(key)];
+			//Treat Non Access-Modifier as public
+			int ciAccess = ci.getAccess(key) != -1 ? ci.getAccess(key) : Component.ACCESS_PUBLIC;
+			List<DumpRow> box = drAccess[ciAccess];
 			Object o = cw.get(key, null);
 			if (o == ci) o = "[this]";
 			if (DumpUtil.keyValid(dp, maxlevel, key)) {
